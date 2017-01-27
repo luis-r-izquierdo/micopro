@@ -5579,8 +5579,9 @@ footer p {
       font-size: 20px;
       text-align: center
    }
+   /* 
    .col-sm-4 {
-      /*      margin-bottom: 120px;*/
+           margin-bottom: 120px;
       text-align: center;
    }
    .col-sm-4 > i {
@@ -5592,6 +5593,7 @@ footer p {
    .col-sm-5 {
       margin-top: 120px
    }
+   */
    .section-heading {
       text-align: center
    }
@@ -5636,13 +5638,17 @@ footer p {
    .h3 {
       font-size: 20px;
    }
+   /*
    .col-sm-4 {
-      margin-bottom: 120px;
+            margin-bottom: 120px;
       text-align: center;
    }
+   */
+   /*
    .col-sm-5 {
-      margin-top: 120px
+           margin-top: 120px
    }
+   */
    .box-ct {
       text-align: center
    }

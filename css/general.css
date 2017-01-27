@@ -25,7 +25,6 @@ li {
    margin: 0px auto;
    display: block;
    height: 50vh;
-   max-height: 100%;
    width: auto;
    max-width: 100%;
 }
@@ -1192,7 +1191,6 @@ parameter {
       height: 40vh;
       max-width: 100%;
       width: auto;
-      max-width: 100%;
    }
    #gallery1 {
       display: none
