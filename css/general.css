@@ -25,6 +25,7 @@ li {
    margin: 0px auto;
    display: block;
    height: 50vh;
+   max-height: 100%;
    width: auto;
    max-width: 100%;
 }
@@ -1180,6 +1181,7 @@ li {
       margin: 0px auto;
       display: block;
       height: 40vh;
+      max-width: 100%;
       width: auto;
       max-width: 100%;
    }
