@@ -39,7 +39,7 @@ globals [
   exp-probability-of-infection-g2
   avg-probability-of-infection-g1
   avg-probability-of-infection-g2
-  probability-of-interaction
+  fraction-of-interacting-agents
 
   avg-lambda-g1
   avg-lambda-g2
@@ -109,15 +109,15 @@ to setup-specific-variables
   set pi11 (1 - mixing / 100)
   set pi22 (1 - mixing / 100)
   set probability-of-recovery 0.03125
-    ;; Assuming probability-of-interaction = 0.5, the upper line
+    ;; Assuming fraction-of-interacting-agents = 0.5, the upper line
     ;; imposes an upper limit on the value of lambda: lambda <= 16.
     ;; Since there could be variability, the population expected value of lambda
     ;; (the value that is set in the interface) should be <= 8.
     ;; I.e. if the user sets lamda = 8, there could an agent with %-variability = 100,
     ;; who would have a value of lambda = 16, and then probability-of-infection = 1.
-  set probability-of-interaction 0.5
-  set exp-probability-of-infection-g1 (expected-lambda-group-1 * probability-of-recovery / probability-of-interaction)
-  set exp-probability-of-infection-g2 (expected-lambda-group-2 * probability-of-recovery / probability-of-interaction)
+  set fraction-of-interacting-agents 0.5
+  set exp-probability-of-infection-g1 (expected-lambda-group-1 * probability-of-recovery / fraction-of-interacting-agents)
+  set exp-probability-of-infection-g2 (expected-lambda-group-2 * probability-of-recovery / fraction-of-interacting-agents)
 end
 
 to setup-agents
@@ -170,8 +170,8 @@ to setup-variables
   set avg-probability-of-infection-g1 mean [probability-of-infection] of g1
   set avg-probability-of-infection-g2 mean [probability-of-infection] of g2
 
-  set avg-lambda-g1 avg-probability-of-infection-g1 * probability-of-interaction / probability-of-recovery
-  set avg-lambda-g2 avg-probability-of-infection-g2 * probability-of-interaction / probability-of-recovery
+  set avg-lambda-g1 avg-probability-of-infection-g1 * fraction-of-interacting-agents / probability-of-recovery
+  set avg-lambda-g2 avg-probability-of-infection-g2 * fraction-of-interacting-agents / probability-of-recovery
 
   update-critical-mixing
 
@@ -241,19 +241,19 @@ to make-couples
 
   ;; We compute the following numbers here
   ;; (rather than just once at the beginning of the simulation)
-  ;; to allow the user modify the value of the probability-of-interaction.
+  ;; to allow the user modify the value of the fraction-of-interacting-agents.
 
   ;; the following agentsets contain an even number of agents
-  let g1-to-interact-with-g1 n-of (2 * floor (probability-of-interaction * n-of-g1 * pi11 / 2)) g1
-  let g2-to-interact-with-g2 n-of (2 * floor (probability-of-interaction * n-of-g2 * pi22 / 2)) g2
+  let g1-to-interact-with-g1 n-of (2 * floor (fraction-of-interacting-agents * n-of-g1 * pi11 / 2)) g1
+  let g2-to-interact-with-g2 n-of (2 * floor (fraction-of-interacting-agents * n-of-g2 * pi22 / 2)) g2
 
   ask individuals [set mate nobody]
 
   pair-yourselves g1-to-interact-with-g1
   pair-yourselves g2-to-interact-with-g2
 
-  let n-of-mixed-interactions floor (probability-of-interaction * n-of-g1 * (1 - pi11))
-    ;; or floor (probability-of-interaction * n-of-g2 * (1 - pi22))
+  let n-of-mixed-interactions floor (fraction-of-interacting-agents * n-of-g1 * (1 - pi11))
+    ;; or floor (fraction-of-interacting-agents * n-of-g2 * (1 - pi22))
   let g1-to-interact-with-g2 n-of n-of-mixed-interactions (g1 with [mate = nobody])
   let g2-to-interact-with-g1 n-of n-of-mixed-interactions (g2 with [mate = nobody])
 
@@ -270,8 +270,8 @@ to make-couples
   ;    ask mate [set mate myself]
   ;  ]
 
-  ;; normally, there can be up to 2 agents of each group left out even if probability-of-interaction = 1.
-  ;; (probability-of-interaction * n-of-g1 * pi11) could be something like 3.8, which would lead to
+  ;; normally, there can be up to 2 agents of each group left out even if fraction-of-interacting-agents = 1.
+  ;; (fraction-of-interacting-agents * n-of-g1 * pi11) could be something like 3.8, which would lead to
   ;; g1-to-interact-with-g1 = 2
 
 end
@@ -288,7 +288,7 @@ to adjust-num-agents
   if adjustment-g1 != 0 [
     ifelse adjustment-g1 > 0
     [
-      set exp-probability-of-infection-g1 (expected-lambda-group-1 * probability-of-recovery / probability-of-interaction)
+      set exp-probability-of-infection-g1 (expected-lambda-group-1 * probability-of-recovery / fraction-of-interacting-agents)
 
       create-individuals adjustment-g1 [
         set my-group 1
@@ -318,7 +318,7 @@ to adjust-num-agents
   if adjustment-g2 != 0 [
     ifelse adjustment-g2 > 0
     [
-      set exp-probability-of-infection-g2 (expected-lambda-group-2 * probability-of-recovery / probability-of-interaction)
+      set exp-probability-of-infection-g2 (expected-lambda-group-2 * probability-of-recovery / fraction-of-interacting-agents)
       create-individuals adjustment-g2 [
         set my-group 2
         set mate nobody
@@ -388,9 +388,9 @@ to update-mean-dynamics
   set pi11 (1 - mixing / 100)
   set pi22 (1 - mixing / 100)
 
-  let prob-meeting-infected-agent-g1 probability-of-interaction *
+  let prob-meeting-infected-agent-g1 fraction-of-interacting-agents *
                                      (pi11 * freq-of-infected-agents-g1 + (1 - pi11) * freq-of-infected-agents-g2)
-  let prob-meeting-infected-agent-g2 probability-of-interaction *
+  let prob-meeting-infected-agent-g2 fraction-of-interacting-agents *
                                      ((1 - pi22) * freq-of-infected-agents-g1 + pi22 * freq-of-infected-agents-g2)
 
   ;; rate at which a susceptible agent of group i becomes infected
