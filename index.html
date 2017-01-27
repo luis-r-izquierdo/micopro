@@ -148,7 +148,7 @@
                <h1>How to install the model</h1>
             </div>
             <div class="col-xs-12">
-               <p>To use <strong>MiCoPro</strong>, you will have to install <a target="_blank" href="http://ccl.northwestern.edu/netlogo/">NetLogo 6 (free and open source)</a> and download <a href="https://github.com/luis-r-izquierdo/micopro/archive/master.zip">this .zip file</a>. The .zip file contains the model itself (micopro.nlogo) and also this website (which contains a description of the model). To run the model, you just have to click on the file micopro.nlogo.</p>
+               <p>To use <strong>MiCoPro</strong>, you will have to install <a target="_blank" href="http://ccl.northwestern.edu/netlogo/">NetLogo 6 (free and open source)</a> and download <a href="https://github.com/luis-r-izquierdo/micopro/archive/master.zip">this <i>zip</i> file</a>. The <i>zip</i> file contains the model itself (micopro.nlogo) and also this very webpage (which contains a description of the model). To run the model, you just have to click on the file micopro.nlogo.</p>
             </div>
 
          </div>
@@ -165,9 +165,35 @@
       <div class="container">
 
          <div class="row">
+
             <div class="col-xs-12">
                <h1>The model</h1>
             </div>
+
+            <div class="col-xs-12 col-sm-4 col-sm-push-8">
+               <div class="well">
+                  <p>We use bold green fonts to denote
+                     <parameter>parameters</parameter> (i.e. variables that can be set by the user) and brown fonts to denote different
+                     <value>values</value> that a
+                     <parameter>parameter</parameter> might take.</p>
+               </div>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-sm-pull-4">
+               <p><strong>Abed</strong> is a modeling framework designed to simulate the evolution of a population of
+                  <parameter>n-of-agents</parameter> agents who recurrently play a symmetric 2-player game defined by a
+                  <parameter>payoff-matrix</parameter>. Agents use pure strategies only, and they occasionally revise their strategy.</p>
+               <p>The simulation runs in discrete time-steps called ticks. Within each tick:</p>
+
+               <ol>
+                  <li>The set of revising agents is chosen</li>
+                  <li>The game is played by the revising agents and all the agents involved in their revision</li>
+                  <li>The revising agents simultaneously update their strategies</li>
+               </ol>
+
+               <p>This sequence of events, which is explained below in detail, is repetead iteratively.</p>
+            </div>
+
+
          </div>
       </div>
       <!-- /.container -->

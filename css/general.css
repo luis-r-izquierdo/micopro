@@ -30,6 +30,11 @@ li {
    max-width: 100%;
 }
 
+parameter {
+   color: cadetblue;
+   font-weight: bold
+}
+
 ::-moz-selection {
    background: #1abc9c;
    color: white
@@ -348,8 +353,12 @@ li {
 }
 
 .content-section-a {
-   background-color: #f8f8f8;
+   background-color: transparent;
+   /* #f8f8f8;*/
    padding: 50px 0 10px 0;
+   /* The following is a trick to make anchors work fine.
+ It avoids sections be hidden behind the navbar when using anchors */
+   margin-top: -50px;
 }
 
 .content-section-a a {
