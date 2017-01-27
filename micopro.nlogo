@@ -35,38 +35,38 @@ globals [
 
   pi11 pi22
   probability-of-recovery
-  exp-probability-of-infection-t1
-  exp-probability-of-infection-t2
-  avg-probability-of-infection-t1
-  avg-probability-of-infection-t2
+  exp-probability-of-infection-g1
+  exp-probability-of-infection-g2
+  avg-probability-of-infection-g1
+  avg-probability-of-infection-g2
   probability-of-interaction
 
-  avg-lambda-t1
-  avg-lambda-t2
+  avg-lambda-g1
+  avg-lambda-g2
 
   ;; Variables for the agent-based model
 
-  n-of-t1 ;; number of agents of type-1
-  n-of-t2 ;; number of agents of type-2
+  n-of-g1 ;; number of agents in group 1
+  n-of-g2 ;; number of agents in group 2
 
-  t1 ;; agentset containing type 1 agents
-  t2 ;; agentset containing type 2 agents
+  g1 ;; agentset containing group 1 agents
+  g2 ;; agentset containing group 2 agents
 
-  %-infected-agents-t1-ab
-  %-infected-agents-t2-ab
+  %-infected-agents-g1-ab
+  %-infected-agents-g2-ab
   %-infected-agents-ab
 
   list-of-latest-%-infected-agents-ab
-  list-of-latest-%-infected-agents-t1-ab
-  list-of-latest-%-infected-agents-t2-ab
+  list-of-latest-%-infected-agents-g1-ab
+  list-of-latest-%-infected-agents-g2-ab
 
   ;; Variables for the mean dynamics
 
-  freq-of-infected-agents-t1
-  freq-of-infected-agents-t2
+  freq-of-infected-agents-g1
+  freq-of-infected-agents-g2
 
-  %-infected-agents-t1-md
-  %-infected-agents-t2-md
+  %-infected-agents-g1-md
+  %-infected-agents-g2-md
   %-infected-agents-md
 
   list-of-stable-%-infected-agents-md
@@ -80,7 +80,7 @@ globals [
 breed [individuals individual]
 
 individuals-own [
-  my-type
+  my-group
   mate
 
   infected?
@@ -116,35 +116,35 @@ to setup-specific-variables
     ;; I.e. if the user sets lamda = 8, there could an agent with %-variability = 100,
     ;; who would have a value of lambda = 16, and then probability-of-infection = 1.
   set probability-of-interaction 0.5
-  set exp-probability-of-infection-t1 (expected-lambda-t1 * probability-of-recovery / probability-of-interaction)
-  set exp-probability-of-infection-t2 (expected-lambda-t2 * probability-of-recovery / probability-of-interaction)
+  set exp-probability-of-infection-g1 (expected-lambda-group-1 * probability-of-recovery / probability-of-interaction)
+  set exp-probability-of-infection-g2 (expected-lambda-group-2 * probability-of-recovery / probability-of-interaction)
 end
 
 to setup-agents
 
-  set n-of-t1 round (n-of-agents-in-total * ifelse-value (pi11 = pi22)
+  set n-of-g1 round (n-of-agents-in-total * ifelse-value (pi11 = pi22)
     [0.5] [ (1 - pi22) / (2 - pi11 - pi22)])
     ;; done to avoid division by zero when pi11 = pi22 = 1
 
-  ;; type 1 agents
-  create-individuals round (n-of-t1 / 2) [
-    set my-type 1
+  ;; group 1 agents
+  create-individuals round (n-of-g1 / 2) [
+    set my-group 1
     set mate nobody
     let random-% (-1 + random-float 2) * %-variability
-    set probability-of-infection (exp-probability-of-infection-t1 * (1 + random-% / 100))
+    set probability-of-infection (exp-probability-of-infection-g1 * (1 + random-% / 100))
     set hidden? true
-    hatch-individuals 1 [set probability-of-infection (exp-probability-of-infection-t1 * (1 - random-% / 100))]
+    hatch-individuals 1 [set probability-of-infection (exp-probability-of-infection-g1 * (1 - random-% / 100))]
   ]
 
-  ;; type 2 agents
-  set n-of-t2 (n-of-agents-in-total - n-of-t1)
-  create-individuals round (n-of-t2 / 2) [
-    set my-type 2
+  ;; group 2 agents
+  set n-of-g2 (n-of-agents-in-total - n-of-g1)
+  create-individuals round (n-of-g2 / 2) [
+    set my-group 2
     set mate nobody
     let random-% (-1 + random-float 2) * %-variability
-    set probability-of-infection (exp-probability-of-infection-t2 * (1 + random-% / 100))
+    set probability-of-infection (exp-probability-of-infection-g2 * (1 + random-% / 100))
     set hidden? true
-    hatch-individuals 1 [set probability-of-infection (exp-probability-of-infection-t2 * (1 - random-% / 100))]
+    hatch-individuals 1 [set probability-of-infection (exp-probability-of-infection-g2 * (1 - random-% / 100))]
   ]
 
 end
@@ -153,25 +153,25 @@ to setup-variables
 
   ;; Variables for the agent-based model
 
-  set t1 individuals with [my-type = 1]
-  set t2 individuals with [my-type = 2]
+  set g1 individuals with [my-group = 1]
+  set g2 individuals with [my-group = 2]
 
   set list-of-latest-%-infected-agents-ab []
-  set list-of-latest-%-infected-agents-t1-ab []
-  set list-of-latest-%-infected-agents-t2-ab []
+  set list-of-latest-%-infected-agents-g1-ab []
+  set list-of-latest-%-infected-agents-g2-ab []
 
   ;; Variables for the mean dynamics
 
-  set freq-of-infected-agents-t1 initial-%-of-infected / 100
-  set freq-of-infected-agents-t2 initial-%-of-infected / 100
+  set freq-of-infected-agents-g1 initial-%-of-infected / 100
+  set freq-of-infected-agents-g2 initial-%-of-infected / 100
 
   set list-of-stable-%-infected-agents-md []
 
-  set avg-probability-of-infection-t1 mean [probability-of-infection] of t1
-  set avg-probability-of-infection-t2 mean [probability-of-infection] of t2
+  set avg-probability-of-infection-g1 mean [probability-of-infection] of g1
+  set avg-probability-of-infection-g2 mean [probability-of-infection] of g2
 
-  set avg-lambda-t1 avg-probability-of-infection-t1 * probability-of-interaction / probability-of-recovery
-  set avg-lambda-t2 avg-probability-of-infection-t2 * probability-of-interaction / probability-of-recovery
+  set avg-lambda-g1 avg-probability-of-infection-g1 * probability-of-interaction / probability-of-recovery
+  set avg-lambda-g2 avg-probability-of-infection-g2 * probability-of-interaction / probability-of-recovery
 
   update-critical-mixing
 
@@ -180,15 +180,15 @@ to setup-variables
 end
 
 to update-critical-mixing
-  set critical-mixing 100 * (1 - ifelse-value (avg-lambda-t1 + avg-lambda-t2 - 2 * avg-lambda-t1 * avg-lambda-t2 = 0)
-    ["N/A"] [(1 - avg-lambda-t1 * avg-lambda-t2) / (avg-lambda-t1 + avg-lambda-t2 - 2 * avg-lambda-t1 * avg-lambda-t2)])
+  set critical-mixing 100 * (1 - ifelse-value (avg-lambda-g1 + avg-lambda-g2 - 2 * avg-lambda-g1 * avg-lambda-g2 = 0)
+    ["N/A"] [(1 - avg-lambda-g1 * avg-lambda-g2) / (avg-lambda-g1 + avg-lambda-g2 - 2 * avg-lambda-g1 * avg-lambda-g2)])
 end
 
 to do-initial-infection
   ask individuals [set infected? false]
   ask (turtle-set
-    (n-of (round (n-of-t1 * initial-%-of-infected / 100)) t1)
-    (n-of (round (n-of-t2 * initial-%-of-infected / 100)) t2)) [
+    (n-of (round (n-of-g1 * initial-%-of-infected / 100)) g1)
+    (n-of (round (n-of-g2 * initial-%-of-infected / 100)) g2)) [
       set infected? true
   ]
 end
@@ -220,8 +220,8 @@ to go
 
   if ticks > 1000 [
     set list-of-latest-%-infected-agents-ab lput %-infected-agents-ab list-of-latest-%-infected-agents-ab
-    set list-of-latest-%-infected-agents-t1-ab lput %-infected-agents-t1-ab list-of-latest-%-infected-agents-t1-ab
-    set list-of-latest-%-infected-agents-t2-ab lput %-infected-agents-t2-ab list-of-latest-%-infected-agents-t2-ab
+    set list-of-latest-%-infected-agents-g1-ab lput %-infected-agents-g1-ab list-of-latest-%-infected-agents-g1-ab
+    set list-of-latest-%-infected-agents-g2-ab lput %-infected-agents-g2-ab list-of-latest-%-infected-agents-g2-ab
     set list-of-stable-%-infected-agents-md lput %-infected-agents-md list-of-stable-%-infected-agents-md
   ]
 
@@ -244,99 +244,99 @@ to make-couples
   ;; to allow the user modify the value of the probability-of-interaction.
 
   ;; the following agentsets contain an even number of agents
-  let t1-to-interact-with-t1 n-of (2 * floor (probability-of-interaction * n-of-t1 * pi11 / 2)) t1
-  let t2-to-interact-with-t2 n-of (2 * floor (probability-of-interaction * n-of-t2 * pi22 / 2)) t2
+  let g1-to-interact-with-g1 n-of (2 * floor (probability-of-interaction * n-of-g1 * pi11 / 2)) g1
+  let g2-to-interact-with-g2 n-of (2 * floor (probability-of-interaction * n-of-g2 * pi22 / 2)) g2
 
   ask individuals [set mate nobody]
 
-  pair-yourselves t1-to-interact-with-t1
-  pair-yourselves t2-to-interact-with-t2
+  pair-yourselves g1-to-interact-with-g1
+  pair-yourselves g2-to-interact-with-g2
 
-  let n-of-mixed-interactions floor (probability-of-interaction * n-of-t1 * (1 - pi11))
-    ;; or floor (probability-of-interaction * n-of-t2 * (1 - pi22))
-  let t1-to-interact-with-t2 n-of n-of-mixed-interactions (t1 with [mate = nobody])
-  let t2-to-interact-with-t1 n-of n-of-mixed-interactions (t2 with [mate = nobody])
+  let n-of-mixed-interactions floor (probability-of-interaction * n-of-g1 * (1 - pi11))
+    ;; or floor (probability-of-interaction * n-of-g2 * (1 - pi22))
+  let g1-to-interact-with-g2 n-of n-of-mixed-interactions (g1 with [mate = nobody])
+  let g2-to-interact-with-g1 n-of n-of-mixed-interactions (g2 with [mate = nobody])
 
-  let t1-to-interact-with-t2-list shuffle sort t1-to-interact-with-t2
-  let t2-to-interact-with-t1-list sort t2-to-interact-with-t1
-  (foreach t1-to-interact-with-t2-list t2-to-interact-with-t1-list [ [?1 ?2] ->
+  let g1-to-interact-with-g2-list shuffle sort g1-to-interact-with-g2
+  let g2-to-interact-with-g1-list sort g2-to-interact-with-g1
+  (foreach g1-to-interact-with-g2-list g2-to-interact-with-g1-list [ [?1 ?2] ->
     ask ?1 [set mate ?2]
     ask ?2 [set mate ?1]
   ])
 
   ;; the following alternative code is less efficient but easier to understand:
-  ;  ask t1-to-interact-with-t2 [
-  ;    set mate one-of (t2-to-interact-with-t1 with [mate = nobody])
+  ;  ask g1-to-interact-with-g2 [
+  ;    set mate one-of (g2-to-interact-with-g1 with [mate = nobody])
   ;    ask mate [set mate myself]
   ;  ]
 
-  ;; normally, there can be up to 2 agents of each type left out even if probability-of-interaction = 1.
-  ;; (probability-of-interaction * n-of-t1 * pi11) could be something like 3.8, which would lead to
-  ;; t1-to-interact-with-t1 = 2
+  ;; normally, there can be up to 2 agents of each group left out even if probability-of-interaction = 1.
+  ;; (probability-of-interaction * n-of-g1 * pi11) could be something like 3.8, which would lead to
+  ;; g1-to-interact-with-g1 = 2
 
 end
 
 to adjust-num-agents
 
-  ;; type 1 agents
-  set n-of-t1 round (n-of-agents-in-total * ifelse-value (pi11 = pi22)
+  ;; group 1 agents
+  set n-of-g1 round (n-of-agents-in-total * ifelse-value (pi11 = pi22)
     [0.5] [ (1 - pi22) / (2 - pi11 - pi22)])
     ;; done to avoid division by zero when pi11 = pi22 = 1
 
-  let adjustment-t1 (n-of-t1 - (count t1))
+  let adjustment-g1 (n-of-g1 - (count g1))
 
-  if adjustment-t1 != 0 [
-    ifelse adjustment-t1 > 0
+  if adjustment-g1 != 0 [
+    ifelse adjustment-g1 > 0
     [
-      set exp-probability-of-infection-t1 (expected-lambda-t1 * probability-of-recovery / probability-of-interaction)
+      set exp-probability-of-infection-g1 (expected-lambda-group-1 * probability-of-recovery / probability-of-interaction)
 
-      create-individuals adjustment-t1 [
-        set my-type 1
+      create-individuals adjustment-g1 [
+        set my-group 1
         set mate nobody
-        set probability-of-infection (exp-probability-of-infection-t1 * (1 + (-1 + random-float 2) * %-variability / 100))
+        set probability-of-infection (exp-probability-of-infection-g1 * (1 + (-1 + random-float 2) * %-variability / 100))
         set hidden? true
-        set infected? ifelse-value (random-float 100.0 < %-infected-agents-t1-ab) [true][false]
+        set infected? ifelse-value (random-float 100.0 < %-infected-agents-g1-ab) [true][false]
       ]
     ]
     [
-      ask n-of (0 - adjustment-t1) t1 [
+      ask n-of (0 - adjustment-g1) g1 [
         if (mate != nobody) [ ask mate [set mate nobody] ]
         die
       ]
     ]
 
-    set t1 individuals with [my-type = 1]
-    set avg-probability-of-infection-t1 mean [probability-of-infection] of t1
-    set avg-lambda-t1 avg-probability-of-infection-t1 / probability-of-recovery
+    set g1 individuals with [my-group = 1]
+    set avg-probability-of-infection-g1 mean [probability-of-infection] of g1
+    set avg-lambda-g1 avg-probability-of-infection-g1 / probability-of-recovery
   ]
 
-  ;; type 2 agents
+  ;; group 2 agents
 
-  set n-of-t2 (n-of-agents-in-total - n-of-t1)
-  let adjustment-t2 (n-of-t2 - (count t2))
+  set n-of-g2 (n-of-agents-in-total - n-of-g1)
+  let adjustment-g2 (n-of-g2 - (count g2))
 
-  if adjustment-t2 != 0 [
-    ifelse adjustment-t2 > 0
+  if adjustment-g2 != 0 [
+    ifelse adjustment-g2 > 0
     [
-      set exp-probability-of-infection-t2 (expected-lambda-t2 * probability-of-recovery / probability-of-interaction)
-      create-individuals adjustment-t2 [
-        set my-type 2
+      set exp-probability-of-infection-g2 (expected-lambda-group-2 * probability-of-recovery / probability-of-interaction)
+      create-individuals adjustment-g2 [
+        set my-group 2
         set mate nobody
-        set probability-of-infection (exp-probability-of-infection-t2 * (1 + (-1 + random-float 2) * %-variability / 100))
+        set probability-of-infection (exp-probability-of-infection-g2 * (1 + (-1 + random-float 2) * %-variability / 100))
         set hidden? true
-        set infected? ifelse-value (random-float 100.0 < %-infected-agents-t2-ab) [true][false]
+        set infected? ifelse-value (random-float 100.0 < %-infected-agents-g2-ab) [true][false]
       ]
     ]
     [
-      ask n-of (0 - adjustment-t2) t2 [
+      ask n-of (0 - adjustment-g2) g2 [
         if (mate != nobody)  [ ask mate [set mate nobody] ]
         die
       ]
     ]
 
-    set t2 individuals with [my-type = 2]
-    set avg-probability-of-infection-t2 mean [probability-of-infection] of t2
-    set avg-lambda-t2 avg-probability-of-infection-t2 / probability-of-recovery
+    set g2 individuals with [my-group = 2]
+    set avg-probability-of-infection-g2 mean [probability-of-infection] of g2
+    set avg-lambda-g2 avg-probability-of-infection-g2 / probability-of-recovery
   ]
 
   update-critical-mixing
@@ -388,18 +388,18 @@ to update-mean-dynamics
   set pi11 (1 - mixing / 100)
   set pi22 (1 - mixing / 100)
 
-  let prob-meeting-infected-agent-t1 probability-of-interaction *
-                                     (pi11 * freq-of-infected-agents-t1 + (1 - pi11) * freq-of-infected-agents-t2)
-  let prob-meeting-infected-agent-t2 probability-of-interaction *
-                                     ((1 - pi22) * freq-of-infected-agents-t1 + pi22 * freq-of-infected-agents-t2)
+  let prob-meeting-infected-agent-g1 probability-of-interaction *
+                                     (pi11 * freq-of-infected-agents-g1 + (1 - pi11) * freq-of-infected-agents-g2)
+  let prob-meeting-infected-agent-g2 probability-of-interaction *
+                                     ((1 - pi22) * freq-of-infected-agents-g1 + pi22 * freq-of-infected-agents-g2)
 
-  ;; rate at which a susceptible agent of type t becomes infected
-  let infection-rate-t1 avg-probability-of-infection-t1 * prob-meeting-infected-agent-t1
-  let infection-rate-t2 avg-probability-of-infection-t2 * prob-meeting-infected-agent-t2
+  ;; rate at which a susceptible agent of group i becomes infected
+  let infection-rate-g1 avg-probability-of-infection-g1 * prob-meeting-infected-agent-g1
+  let infection-rate-g2 avg-probability-of-infection-g2 * prob-meeting-infected-agent-g2
 
   ;; it is best to choose powers of 2 for the value of time-resolution (since we are dividing)
-  set freq-of-infected-agents-t1 freq-of-infected-agents-t1 + (((1 - freq-of-infected-agents-t1) * infection-rate-t1 - freq-of-infected-agents-t1 * probability-of-recovery) / time-resolution)
-  set freq-of-infected-agents-t2 freq-of-infected-agents-t2 + (((1 - freq-of-infected-agents-t2) * infection-rate-t2 - freq-of-infected-agents-t2 * probability-of-recovery) / time-resolution)
+  set freq-of-infected-agents-g1 freq-of-infected-agents-g1 + (((1 - freq-of-infected-agents-g1) * infection-rate-g1 - freq-of-infected-agents-g1 * probability-of-recovery) / time-resolution)
+  set freq-of-infected-agents-g2 freq-of-infected-agents-g2 + (((1 - freq-of-infected-agents-g2) * infection-rate-g2 - freq-of-infected-agents-g2 * probability-of-recovery) / time-resolution)
 
 end
 
@@ -410,18 +410,18 @@ end
 to gather-data-ab
 
   ;; Agent-based model
-  set %-infected-agents-t1-ab 100 * (count t1 with [infected?]) / n-of-t1
-  set %-infected-agents-t2-ab 100 * (count t2 with [infected?]) / n-of-t2
-  set %-infected-agents-ab (n-of-t1 * %-infected-agents-t1-ab + n-of-t2 * %-infected-agents-t2-ab) / (n-of-t1 + n-of-t2)
+  set %-infected-agents-g1-ab 100 * (count g1 with [infected?]) / n-of-g1
+  set %-infected-agents-g2-ab 100 * (count g2 with [infected?]) / n-of-g2
+  set %-infected-agents-ab (n-of-g1 * %-infected-agents-g1-ab + n-of-g2 * %-infected-agents-g2-ab) / (n-of-g1 + n-of-g2)
 
 end
 
 to gather-data-md
 
   ;; Mean dynamics
-  set %-infected-agents-t1-md 100 * freq-of-infected-agents-t1
-  set %-infected-agents-t2-md 100 * freq-of-infected-agents-t2
-  set %-infected-agents-md (%-infected-agents-t1-md * n-of-t1 + %-infected-agents-t2-md * n-of-t2) / (n-of-t1 + n-of-t2)
+  set %-infected-agents-g1-md 100 * freq-of-infected-agents-g1
+  set %-infected-agents-g2-md 100 * freq-of-infected-agents-g2
+  set %-infected-agents-md (%-infected-agents-g1-md * n-of-g1 + %-infected-agents-g2-md * n-of-g2) / (n-of-g1 + n-of-g2)
 
 end
 
@@ -559,8 +559,8 @@ true
 true
 "" ""
 PENS
-"type 1" 1.0 0 -13345367 true "" "plot %-infected-agents-t1-ab"
-"type 2" 1.0 0 -2674135 true "" "plot %-infected-agents-t2-ab"
+"g1" 1.0 0 -13345367 true "" "plot %-infected-agents-g1-ab"
+"g2" 1.0 0 -2674135 true "" "plot %-infected-agents-g2-ab"
 "all" 1.0 0 -7500403 true "" "plot %-infected-agents-ab"
 
 PLOT
@@ -579,8 +579,8 @@ true
 true
 "" ""
 PENS
-"type 1" 1.0 0 -13345367 true "" "plot %-infected-agents-t1-md"
-"type 2" 1.0 0 -2674135 true "" "plot %-infected-agents-t2-md"
+"g1" 1.0 0 -13345367 true "" "plot %-infected-agents-g1-md"
+"g2" 1.0 0 -2674135 true "" "plot %-infected-agents-g2-md"
 "all" 1.0 0 -7500403 true "" "plot %-infected-agents-md"
 
 SLIDER
@@ -612,10 +612,10 @@ critical-mixing
 MONITOR
 577
 46
-698
+711
 91
-%-infected-t1-ab
-%-infected-agents-t1-ab
+%-infected-g1-abm
+%-infected-agents-g1-ab
 2
 1
 11
@@ -623,10 +623,10 @@ MONITOR
 MONITOR
 577
 94
-696
+711
 139
-%-infected-t2-ab
-%-infected-agents-t2-ab
+%-infected-g2-abm
+%-infected-agents-g2-ab
 2
 1
 11
@@ -634,10 +634,10 @@ MONITOR
 MONITOR
 575
 229
-699
+710
 274
-%-infected-t1-md
-%-infected-agents-t1-md
+%-infected-g1-md
+%-infected-agents-g1-md
 2
 1
 11
@@ -645,10 +645,10 @@ MONITOR
 MONITOR
 575
 277
-699
+710
 322
-%-infected-t2-md
-%-infected-agents-t2-md
+%-infected-g2-md
+%-infected-agents-g2-md
 2
 1
 11
@@ -689,7 +689,7 @@ agent-based-model?
 MONITOR
 575
 325
-727
+734
 370
 NIL
 %-infected-agents-md
@@ -700,9 +700,9 @@ NIL
 MONITOR
 577
 142
-725
+736
 187
-NIL
+%-infected-agents-abm
 %-infected-agents-ab
 2
 1
@@ -717,7 +717,7 @@ mixing
 mixing
 0
 100
-0.0
+50.0
 1
 1
 %
@@ -732,7 +732,7 @@ n-of-agents-in-total
 n-of-agents-in-total
 1000
 10000
-1000.0
+5000.0
 1000
 1
 NIL
@@ -741,10 +741,10 @@ HORIZONTAL
 SLIDER
 25
 148
-210
+277
 181
-expected-lambda-t1
-expected-lambda-t1
+expected-lambda-group-1
+expected-lambda-group-1
 0
 6
 0.5
@@ -756,10 +756,10 @@ HORIZONTAL
 SLIDER
 25
 185
-210
+277
 218
-expected-lambda-t2
-expected-lambda-t2
+expected-lambda-group-2
+expected-lambda-group-2
 0
 6
 2.0
@@ -788,8 +788,8 @@ MONITOR
 265
 150
 310
-avg lambda-t1
-avg-lambda-t1
+avg lambda-g1
+avg-lambda-g1
 3
 1
 11
@@ -799,8 +799,8 @@ MONITOR
 265
 278
 310
-avg lambda-t2
-avg-lambda-t2
+avg lambda-g2
+avg-lambda-g2
 3
 1
 11
