@@ -18,7 +18,15 @@ html {
 
 p,
 li {
-   text-align: justify;
+   text-align: justify !important;
+}
+
+.my-img {
+   margin: 0px auto;
+   display: block;
+   height: 50vh;
+   width: auto;
+   max-width: 100%;
 }
 
 ::-moz-selection {
@@ -1167,6 +1175,13 @@ li {
    h3,
    .h3 {
       font-size: 20px;
+   }
+   .my-img {
+      margin: 0px auto;
+      display: block;
+      height: 40vh;
+      width: auto;
+      max-width: 100%;
    }
    #gallery1 {
       display: none
