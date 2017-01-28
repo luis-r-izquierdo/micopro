@@ -148,7 +148,7 @@
                <h1>How to install the model</h1>
             </div>
             <div class="col-xs-12">
-               <p>To use <strong>MiCoPro</strong>, you will have to install <a target="_blank" href="http://ccl.northwestern.edu/netlogo/">NetLogo 6 (free and open source)</a> and download <a href="https://github.com/luis-r-izquierdo/micopro/archive/master.zip">this <i>zip</i> file</a>. The <i>zip</i> file contains the model itself (micopro.nlogo) and also this very webpage (which contains a description of the model). To run the model, you just have to click on the file micopro.nlogo.</p>
+               <p>To use <strong>MiCoPro</strong> (<strong>Mi</strong>xing in <strong>Co</strong>ntagion <strong>Pro</strong>cesses), you will have to install <a target="_blank" href="http://ccl.northwestern.edu/netlogo/">NetLogo 6 (free and open source)</a> and download <a href="https://github.com/luis-r-izquierdo/micopro/archive/master.zip">this <i>zip</i> file</a>. The <i>zip</i> file contains the model itself (micopro.nlogo) and also this very webpage (which contains a description of the model). To run the model, you just have to click on the file micopro.nlogo.</p>
             </div>
 
          </div>
@@ -170,31 +170,68 @@
                <h1>The model</h1>
             </div>
 
-            <div class="col-xs-12 col-sm-4 col-sm-push-8">
+            <div class="col-xs-12 col-sm-5 col-sm-push-7">
                <div class="well">
                   <p>We use bold green fonts to denote
-                     <parameter>parameters</parameter> (i.e. variables that can be set by the user) and brown fonts to denote different
-                     <value>values</value> that a
-                     <parameter>parameter</parameter> might take.</p>
+                     <parameter>variables</parameter> in the model. The value of most variables can be set by the user by modifying the corresponding slider in the interface of the model.</p>
                </div>
             </div>
-            <div class="col-xs-12 col-sm-8 col-sm-pull-4">
-               <p><strong>Abed</strong> is a modeling framework designed to simulate the evolution of a population of
-                  <parameter>n-of-agents</parameter> agents who recurrently play a symmetric 2-player game defined by a
-                  <parameter>payoff-matrix</parameter>. Agents use pure strategies only, and they occasionally revise their strategy.</p>
-               <p>The simulation runs in discrete time-steps called ticks. Within each tick:</p>
+            <div class="col-xs-12 col-sm-7 col-sm-pull-5">
+               <p><strong>MiCoPro</strong> is an agent-based model designed to analyze the consequences of mixing two groups of agents that have different predispositions to adopt a certain trait (or infection). Each individual agent is in one of two possible states: infected or susceptible. In the model there are
+                  <parameter>n-of-agents-in-total</parameter> agents. Half of them belong to one group and the other half to the other group. The two groups differ in their members' expected propensity to become infected.
+               </p>
+            </div>
+         </div>
+         <div class="row">
 
-               <ol>
-                  <li>The set of revising agents is chosen</li>
-                  <li>The game is played by the revising agents and all the agents involved in their revision</li>
-                  <li>The revising agents simultaneously update their strategies</li>
+            <div class="col-sm-12 col-md-6 col-md-push-6">
+
+               <p style="margin: 0;">The simulation runs in discrete time-steps called ticks. Within each tick:</p>
+
+               <ol style="margin: 0;">
+                  <li>In each group, a fraction of agents equal to
+                     <parameter>fraction-of-interacting-agents</parameter> is selected to be matched in this tick.
+                  </li>
+                  <li>Agents are matched in a way that guarantees that the percentage of intergroup couples (i.e. couples with partners belonging to different groups) is equal to the value of the parameter
+                     <parameter>mixing</parameter>.
+                  </li>
+                  <li>Susceptible agents become infected only if their partner is infected, and in that case they do so with probability
+                     <parameter>&upsilon;</parameter>. Infected agents become susceptible with probability
+                     <parameter>&delta;</parameter>.
+                  </li>
                </ol>
+               <p>This sequence of events is repetead iteratively.</p>
 
-               <p>This sequence of events, which is explained below in detail, is repetead iteratively.</p>
             </div>
 
+            <div class="col-xs-12 col-sm-offset-1 col-sm-pull-0 col-sm-10 col-md-offset-0 col-md-pull-6 col-md-6">
+               <img class="img-center img-responsive" src="./img/sis.png" />
+            </div>
 
          </div>
+
+         <div class="row">
+
+
+            <div class="col-xs-12">
+               <h2>The mean dynamics approximation</h2>
+
+               <p>The model also computes and displays the expected motion of the agent-based model described above. The expected motion is sometimes called the mean dynamics or the mean field of the original model, and is expected to be a good approximation of the stochastic evolution of the agent-based model described above, when the population is large.</p>
+
+               <p style="margin: 0;">In essence, the mean dynamics system invokes a repeated use of the law of large numbers to identify the following magnitudes:</p>
+
+               <ul>
+                  <li>ex ante matching probabilities and ex post frequencies at the pairing stage,</li>
+                  <li>expected number of deaths and average number of deaths for each group of strategists,</li>
+                  <li>ex ante mutation probabilities and ex post frequencies.</li>
+               </ul>
+
+               <p>Such an identification of probabilities and frequencies leads to a deterministic set of equations that provides the mean dynamics of the stochastic agent-based model described above. The behaviour of this set of deterministic equations can be taken to approximate the behavior of the stochastic process described above if the population is large.</p>
+
+            </div>
+
+         </div>
+
       </div>
       <!-- /.container -->
    </div>
