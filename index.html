@@ -187,7 +187,8 @@
 
             <div class="col-sm-12 col-md-6 col-md-push-6">
 
-               <p style="margin: 0;">The simulation runs in discrete time-steps called ticks. Within each tick the following sequence of events takes place:</p>
+               <p style="margin: 0;">Initially, the percentage of infected individuals in each group equals
+                  <parameter>initial-%-of-infected</parameter>. The simulation runs in discrete time-steps called ticks. Within each tick the following sequence of events takes place:</p>
 
                <ol style="margin: 0;">
                   <li>In each group, a fraction
@@ -223,11 +224,11 @@
 
                <p style="margin: 0;">The program also computes and displays the expected motion of the agent-based model described above, ignoring the heterogeneity in the values of
                   <parameter>&upsilon;<sub>agent,i</sub></parameter> and
-                  <parameter>&delta;<sub>agent,i</sub></parameter> within each group i. The expected motion is sometimes called the mean dynamics or the mean field of the original model, and is expected to be a good approximation of the stochastic evolution of the agent-based model described above, when the population is large. Let &rho;<sub>i</sub> denote the fraction of adopters (infected individuals) in group i. If agents within each group present the same probabilities
+                  <parameter>&delta;<sub>agent,i</sub></parameter> within each group i &isin; {1, 2}. The expected motion is sometimes called the mean dynamics or the mean field of the original model, and is expected to be a good approximation of the stochastic evolution of the agent-based model described above, when the population is large. Let &rho;<sub>i</sub> denote the fraction of adopters (infected individuals) in group i. If agents within each group present the same probabilities
                   <parameter>&upsilon;<sub>agent,i</sub></parameter> =
                   <parameter>&upsilon;<sub>i</sub></parameter> and
                   <parameter>&delta;<sub>agent,i</sub></parameter> =
-                  <parameter>&delta;<sub>i</sub></parameter>, the mean dynamics of this model, as described in the paper, is:</p>
+                  <parameter>&delta;<sub>i</sub></parameter>, the mean dynamics of this model is:</p>
 
 
                <div style="text-align: center">
@@ -268,7 +269,7 @@
                <p style="margin: 0;">
                   The agent-based model allows agents within one same group to have different values of
                   <parameter>&lambda;<sub>agent,i</sub></parameter>. This is done by allowing the user to parameterize a uniform distribution of values for
-                  <parameter>&lambda;<sub>agent,i</sub></parameter> within each group. To be sure, agents within group i are created with a value of
+                  <parameter>&lambda;<sub>agent,i</sub></parameter> within each group. Specifically, agents within group i are created with a value of
                   <parameter>&lambda;<sub>agent,i</sub></parameter> drawn from the uniform distribution:
                </p>
                <div style="text-align: center">
