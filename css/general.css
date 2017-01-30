@@ -375,6 +375,13 @@ my-plot {
    margin-top: -50px;
 }
 
+.my-section {
+   padding: 70px 0 0px 0;
+   /* The following is a trick to make anchors work fine.
+ It avoids sections be hidden behind the navbar when using anchors */
+   margin-top: -50px;
+}
+
 .content-section-a a {
    color: maroon;
 }
