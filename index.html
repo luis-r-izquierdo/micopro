@@ -223,11 +223,11 @@
 
                <p style="margin: 0;">The program also computes and displays the expected motion of the agent-based model described above, ignoring the heterogeneity in the values of
                   <parameter>&upsilon;<sub>agent,i</sub></parameter> and
-                  <parameter>&delta;<sub>agent,i</sub></parameter> within each group i. The expected motion is sometimes called the mean dynamics or the mean field of the original model, and is expected to be a good approximation of the stochastic evolution of the agent-based model described above, when the population is large. Let &rho;<sub>i</sub> denote the fraction of adopters (infected individuals) in group i and let
+                  <parameter>&delta;<sub>agent,i</sub></parameter> within each group i. The expected motion is sometimes called the mean dynamics or the mean field of the original model, and is expected to be a good approximation of the stochastic evolution of the agent-based model described above, when the population is large. Let &rho;<sub>i</sub> denote the fraction of adopters (infected individuals) in group i. If agents within each group present the same probabilities
+                  <parameter>&upsilon;<sub>agent,i</sub></parameter> =
                   <parameter>&upsilon;<sub>i</sub></parameter> and
-                  <parameter>&delta;<sub>i</sub></parameter> be the respective average values of
-                  <parameter>&upsilon;<sub>agent,i</sub></parameter> and
-                  <parameter>&delta;<sub>agent,i</sub></parameter> across agents in group i. As described in the paper, the mean dynamics of this model is:</p>
+                  <parameter>&delta;<sub>agent,i</sub></parameter> =
+                  <parameter>&delta;<sub>i</sub></parameter>, the mean dynamics of this model, as described in the paper, is:</p>
 
 
                <div style="text-align: center">
@@ -255,27 +255,47 @@
                   <parameter>&lambda;<sub>i</sub></parameter> =
                   <parameter>p</parameter>
                   <parameter>&upsilon;<sub>i</sub></parameter> /
-                  <parameter>&delta;<sub>i</sub></parameter> is the so-called <i>effective adoption rate</i> for group i.
-               </p>
-
-               <p>This approximation is simple enough so that the evolution of aggregate adoption rates can be described with just three relevant parameters:
+                  <parameter>&delta;<sub>i</sub></parameter> is the so-called <i>effective adoption rate</i> for group i. Thus, this approximation is simple enough so that the evolution of aggregate adoption can be described with just three relevant parameters:
                   <parameter>&lambda;<sub>1</sub></parameter>,
                   <parameter>&lambda;<sub>2</sub></parameter> and
-                  <parameter>mixing</parameter>. Having said that, the agent-based model does allow agents within one same group to have different values of
-                  <parameter>&lambda;<sub>agent,i</sub></parameter>. This is done by allowing the user to specify a distribution of values for
-                  <parameter>&lambda;<sub>agent,i</sub></parameter> within each group (by setting the value of parameters
-                  <parameter>expected-lambda-group-1</parameter>,
-                  <parameter>expected-lambda-group-2</parameter> and
-                  <parameter>%-variability</parameter>, which are explained in the next section).
+                  <parameter>mixing</parameter>.
+
                </p>
+            </div>
+
+            <div class="col-xs-12">
+               <h2>Heterogeneity within each group</h2>
+               <p style="margin: 0;">
+                  The agent-based model allows agents within one same group to have different values of
+                  <parameter>&lambda;<sub>agent,i</sub></parameter>. This is done by allowing the user to parameterize a uniform distribution of values for
+                  <parameter>&lambda;<sub>agent,i</sub></parameter> within each group. To be sure, agents within group i are created with a value of
+                  <parameter>&lambda;<sub>agent,i</sub></parameter> drawn from the uniform distribution:
+               </p>
+               <div style="text-align: center">
+                  Uniform [ <i>min</i> =
+                  <parameter>expected-lambda-group-i</parameter> &middot; (1 -
+                  <parameter>%-variability</parameter> / 100) , <i>max</i> =
+                  <parameter>expected-lambda-group-i</parameter> &middot; (1 +
+                  <parameter>%-variability</parameter> / 100) ]
+               </div>
+               <br>
 
                <div class="well">
                   <p style="margin: 0;">To be precise, the value of
                      <parameter>p</parameter> is set to 2<sup>-1</sup> and the value of
-                     <parameter>&delta;<sub>agent,i</sub></parameter> is set to 2<sup>-5</sup> for every agent. Given these values and a certain value of the parameter
-                     <parameter>expected-lambda-group-i</parameter> (used to set up the properties of the agents in group i), the (ex-ante) expected value of
-                     <parameter>&upsilon;<sub>agent,i</sub></parameter> for an agent in group i is:
+                     <parameter>&delta;<sub>agent,i</sub></parameter> is set to 2<sup>-5</sup> for every agent. The value of
+                     <parameter>&upsilon;<sub>agent,i</sub></parameter> for any specific agent in group i is drawn from the uniform distribution:
                   </p>
+
+                  <div style="text-align: center">
+                     Uniform [ <i>min</i> = E(
+                     <parameter>&upsilon;<sub>agent,i</sub></parameter> ) &middot; (1 -
+                     <parameter>%-variability</parameter> / 100) , <i>max</i> = E(
+                     <parameter>&upsilon;<sub>agent,i</sub></parameter> ) &middot; (1 +
+                     <parameter>%-variability</parameter> / 100) ]
+                  </div>
+
+                  <p style="margin: 0;">where:</p>
                   <div style="text-align: center">
                      E(
                      <parameter>&upsilon;<sub>agent,i</sub></parameter> ) =
@@ -286,16 +306,16 @@
                   </div>
 
                   <p style="margin: 0;">
-                     The actual (ex-post) value of
-                     <parameter>&upsilon;<sub>agent,i</sub></parameter> for any specific agent in group i is drawn from the uniform distribution:
+                     This implies that the value of
+                     <parameter>&lambda;<sub>agent,i</sub></parameter> within each group follows the aforementioned distribution:
                   </p>
 
                   <div style="text-align: center">
-                     Uniform [ <i>min</i> = E(
-                     <parameter>&upsilon;<sub>agent,i</sub></parameter> ) &middot; (1 -
-                     <parameter>%-variability</parameter> / 100) , <i>max</i> = E(
-                     <parameter>&upsilon;<sub>agent,i</sub></parameter> ) &middot; (1 +
-                     <parameter>%-variability</parameter> / 100) ].
+                     Uniform [ <i>min</i> =
+                     <parameter>expected-lambda-group-i</parameter> &middot; (1 -
+                     <parameter>%-variability</parameter> / 100) , <i>max</i> =
+                     <parameter>expected-lambda-group-i</parameter> &middot; (1 +
+                     <parameter>%-variability</parameter> / 100) ]
                   </div>
 
                   <p>The values of
@@ -304,104 +324,104 @@
                </div>
 
             </div>
-
-
-
          </div>
-         <!-- /.container -->
+
+
       </div>
+      <!-- /.container -->
+   </div>
 
-      <div class="separator"></div>
+   <div class="separator"></div>
 
-      <!-- How to use it -->
-      <div id="use" class="content-section-a">
-         <div class="container">
-            <div class="row">
+   <!-- How to use it -->
+   <div id="use" class="content-section-a">
+      <div class="container">
+         <div class="row">
 
-               <div class="col-xs-12">
-                  <h1>How to use the model</h1>
-
-               </div>
+            <div class="col-xs-12">
+               <h1>How to use the model</h1>
 
             </div>
 
+         </div>
+
+
+      </div>
+   </div>
+
+   <div class="separator"></div>
+
+   <!-- Licence -->
+   <div id="licence" class="content-section-a">
+      <div class="container">
+         <div class="row">
+            <div class="col-xs-12">
+               <h1>License</h1>
+               <br>
+               <p><strong>MiCoPro</strong> (<strong>Mi</strong>xing in <strong>Co</strong>ntagion <strong>Pro</strong>cesses) is a model designed to analyze the consequences of mixing two groups that have different predispositions to adopt a certain trait (or infection).</p>
+               <p>Copyright (C) 2017 <a target="_blank" href="http://luis.izqui.org">Luis R. Izquierdo</a>, <a target="_blank" href="http://segis.izqui.org">Segismundo S. Izquierdo</a> &amp; <a target="_blank" href="https://sites.google.com/site/dlopezpintado/">Dunia L&oacute;pez Pintado</a>
+               </p>
+               <p>This program is free software; you can redistribute it and/or modify it under the terms of the <a target="_blank" href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</a> as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.</p>
+               <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the <a target="_blank" href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</a> for more details.</p>
+               <p>You can download a copy of the <a target="_blank" href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</a> by clicking <a target="_blank" href="./LICENSE">here</a>; you can also get a printed copy writing to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.</p>
+               <p>Contact information:
+                  <br>Luis R. Izquierdo
+                  <br> University of Burgos, Spain.
+                  <br> e-mail: <a href="mailto:lrizquierdo@ubu.es">lrizquierdo@ubu.es</a>
+               </p>
+            </div>
 
          </div>
       </div>
+   </div>
 
-      <div class="separator"></div>
+   <div class="content-section-c">
+      <div class="container">
 
-      <!-- Licence -->
-      <div id="licence" class="content-section-a">
-         <div class="container">
-            <div class="row">
-               <div class="col-xs-12">
-                  <h1>License</h1>
-                  <br>
-                  <p><strong>MiCoPro</strong> (<strong>Mi</strong>xing in <strong>Co</strong>ntagion <strong>Pro</strong>cesses) is a model designed to analyze the consequences of mixing two groups that have different predispositions to adopt a certain trait (or infection).</p>
-                  <p>Copyright (C) 2017 <a target="_blank" href="http://luis.izqui.org">Luis R. Izquierdo</a>, <a target="_blank" href="http://segis.izqui.org">Segismundo S. Izquierdo</a> &amp; <a target="_blank" href="https://sites.google.com/site/dlopezpintado/">Dunia L&oacute;pez Pintado</a>
-                  </p>
-                  <p>This program is free software; you can redistribute it and/or modify it under the terms of the <a target="_blank" href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</a> as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.</p>
-                  <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the <a target="_blank" href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</a> for more details.</p>
-                  <p>You can download a copy of the <a target="_blank" href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</a> by clicking <a target="_blank" href="./LICENSE">here</a>; you can also get a printed copy writing to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.</p>
-                  <p>Contact information:
-                     <br>Luis R. Izquierdo
-                     <br> University of Burgos, Spain.
-                     <br> e-mail: <a href="mailto:lrizquierdo@ubu.es">lrizquierdo@ubu.es</a>
-                  </p>
+         <div class="row">
+            <div class="col-sm-12">
+               <!-- a div rather than p because I want it centered, and p has justify !important -->
+               <div class="lead text-center">
+                  Copyleft &copy; Luis R. Izquierdo, Segismundo S. Izquierdo &amp; Dunia L&oacute;pez Pintado 2017
+                  <br> <i class="fa fa-sliders"></i>
                </div>
+
 
             </div>
          </div>
       </div>
+   </div>
 
-      <div class="content-section-c">
-         <div class="container">
-
-            <div class="row">
-               <div class="col-sm-12">
-                  <!-- a div rather than p because I want it centered, and p has justify !important -->
-                  <div class="lead text-center">
-                     Copyleft &copy; Luis R. Izquierdo, Segismundo S. Izquierdo &amp; Dunia L&oacute;pez Pintado 2017
-                     <br> <i class="fa fa-sliders"></i>
-                  </div>
-
-
-               </div>
-            </div>
-         </div>
-      </div>
-
-      <div class="text-muted text-center">Based on <a href="http://www.andreagalanti.it/lab/flatfy/" target="_blank">Flatfly</a> template </div>
+   <div class="text-muted text-center">Based on <a href="http://www.andreagalanti.it/lab/flatfy/" target="_blank">Flatfly</a> template </div>
 
 
 
 
-      <!-- JavaScript -->
-      <script src="js/jquery-1.10.2.js"></script>
-      <script src="js/bootstrap.js"></script>
-      <script src="js/owl.carousel.js"></script>
-      <script src="js/script.js"></script>
-      <!-- StikyMenu -->
-      <script src="js/stickUp.min.js"></script>
-      <script type="text/javascript">
-         jQuery(function ($) {
-            $(document).ready(function () {
-               $('.navbar-default').stickUp();
+   <!-- JavaScript -->
+   <script src="js/jquery-1.10.2.js"></script>
+   <script src="js/bootstrap.js"></script>
+   <script src="js/owl.carousel.js"></script>
+   <script src="js/script.js"></script>
+   <!-- StikyMenu -->
+   <script src="js/stickUp.min.js"></script>
+   <script type="text/javascript">
+      jQuery(function ($) {
+         $(document).ready(function () {
+            $('.navbar-default').stickUp();
 
-            });
          });
-      </script>
-      <!-- Smoothscroll -->
-      <script type="text/javascript" src="js/jquery.corner.js"></script>
-      <script src="js/wow.min.js"></script>
-      <script>
-         new WOW().init();
-      </script>
-      <script src="js/classie.js"></script>
-      <script src="js/uiMorphingButton_inflow.js"></script>
-      <!-- Magnific Popup core JS file -->
-      <script src="js/jquery.magnific-popup.js"></script>
+      });
+   </script>
+   <!-- Smoothscroll -->
+   <script type="text/javascript" src="js/jquery.corner.js"></script>
+   <script src="js/wow.min.js"></script>
+   <script>
+      new WOW().init();
+   </script>
+   <script src="js/classie.js"></script>
+   <script src="js/uiMorphingButton_inflow.js"></script>
+   <!-- Magnific Popup core JS file -->
+   <script src="js/jquery.magnific-popup.js"></script>
 </body>
 
 </html>
