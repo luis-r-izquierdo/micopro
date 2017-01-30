@@ -430,9 +430,8 @@ to check-stability
   set %-infected-agents-x-ticks-ago %-infected-agents-now
   set %-infected-agents-now %-infected-agents-md
 
-  if not-significantly-different?
+  set steady-state? not-significantly-different?
     (list %-infected-agents-now %-infected-agents-x-ticks-ago %-infected-agents-2x-ticks-ago)
-    [set steady-state? true]
 end
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
