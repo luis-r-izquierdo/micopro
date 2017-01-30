@@ -342,6 +342,78 @@
             <div class="col-xs-12">
                <h1>How to use the model</h1>
 
+               <h2>Parameters</h2>
+               <ul>
+                  <li>
+                     <parameter>n-of-agents-in-total</parameter>: </li>
+                  <li>
+                     <parameter>initial-%-of-infected</parameter>: </li>
+                  <li>
+                     <parameter>mixing</parameter>: </li>
+                  <li>
+                     <parameter>expected-lambda-group-1</parameter>,
+                     <parameter>expected-lambda-group-2</parameter>, and
+                     <parameter>%-variability</parameter>: </li>
+                  <li>
+                     <parameter>agent-based-model?</parameter>: </li>
+                  <li>
+                     <parameter>time-resolution</parameter>: </li>
+               </ul>
+
+               <h2>Buttons</h2>
+               <ul>
+                  <li>
+                     <my-button>setup</my-button>: Resets all the variables and creates a new population of agents. </li>
+                  <li>
+                     <my-button>go once</my-button>: Pressing this button will run the model one time-step only.</li>
+                  <li>
+                     <my-button>go</my-button>: Pressing this button will run the model until this same button is pressed again. </li>
+               </ul>
+
+               <h2>Monitors</h2>
+
+               <ul>
+                  <li>
+                     <my-monitor>time</my-monitor>: Number of time-steps (or ticks) that have gone by.</li>
+                  <li>
+                     <my-monitor>avg-lambda-g1</my-monitor>: Average value of
+                     <parameter>&lambda;<sub>agent</sub></parameter> in group 1</li>
+                  <li>
+                     <my-monitor>avg-lambda-g2</my-monitor>: Average value of
+                     <parameter>&lambda;<sub>agent</sub></parameter> in group 2</li>
+                  <li>
+                     <my-monitor>critical-mixing</my-monitor>: Minimum value of
+                     <parameter>mixing</parameter> for which the infection will die out out in the long term for situations where the
+                     <parameter>expected-lambda-group</parameter> is below 1 for one group and above 1 for the other (i.e. if both groups were isolated, the infection would die out in one group and would persist in the other).</li>
+                  <li>
+                     <my-monitor>%-infected-agents-g1-ab</my-monitor>: Percentage of infected agents in group 1, in the current time-step in the agent-based model.</li>
+                  <li>
+                     <my-monitor>%-infected-agents-g2-ab</my-monitor>: Percentage of infected agents in group 2, in the current time-step in the agent-based model.</li>
+                  <li>
+                     <my-monitor>%-infected-agents-ab</my-monitor>: Percentage of infected agents in the current time-step in the agent-based model.</li>
+                  <li>
+                     <my-monitor>%-infected-agents-g1-md</my-monitor>: Percentage of infected agents in group 1, in the current time-step in the mean dynamics approximation.</li>
+                  <li>
+                     <my-monitor>%-infected-agents-g2-md</my-monitor>: Percentage of infected agents in group 2, in the current time-step in the mean dynamics approximation.</li>
+                  <li>
+                     <my-monitor>%-infected-agents-md</my-monitor>: Percentage of infected agents in the current time-step in the mean dynamics approximation.</li>
+                  <li>
+                     <my-monitor>steady-state?</my-monitor>: This monitor displays the value <i>true</i> if the mean dynamics have reached a steady state; otherwise it displays false. It is considered that a steady state has been reached if and only if the value of
+                     <my-monitor>%-infected-agents-md</my-monitor> in the current time-step, 50 ticks before, and 100 ticks before, differ less than 0.001. </li>
+               </ul>
+
+
+
+               <h2>Plots</h2>
+
+               <ul>
+                  <li>
+                     <my-plot>% Infected - Agent-based model</my-plot>: For the agent-based model, this plot shows the time series of the percentage of infected agents in group 1 (g1, in blue), in group 2 (g2, in red) and in total.</li>
+                  <li>
+                     <my-plot>% infected - Mean dynamics</my-plot>: For the mean dynamics approximation, this plot shows the time series of the percentage of infected agents in group 1 (g1, in blue), in group 2 (g2, in red) and in total.</li>
+               </ul>
+
+
             </div>
 
          </div>

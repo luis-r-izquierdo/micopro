@@ -34,6 +34,21 @@ parameter {
    font-weight: bold
 }
 
+my-button {
+   color: blue;
+   font-weight: bold
+}
+
+my-monitor {
+   color: #B8860B;
+   font-weight: bold
+}
+
+my-plot {
+   color: brown;
+   font-weight: bold
+}
+
 ::-moz-selection {
    background: #1abc9c;
    color: white
