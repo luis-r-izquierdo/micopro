@@ -265,7 +265,7 @@
             </div>
 
             <div class="col-xs-12">
-               <h2>Heterogeneity within each group</h2>
+               <h2 id="heterogeneity">Heterogeneity within each group</h2>
                <p style="margin: 0;">
                   The agent-based model allows agents within one same group to have different values of
                   <parameter>&lambda;<sub>agent,i</sub></parameter>. This is done by allowing the user to parameterize a uniform distribution of values for
@@ -345,19 +345,21 @@
                <h2>Parameters</h2>
                <ul>
                   <li>
-                     <parameter>n-of-agents-in-total</parameter>: </li>
+                     <parameter>n-of-agents-in-total</parameter>: Total number of agents.</li>
                   <li>
-                     <parameter>initial-%-of-infected</parameter>: </li>
+                     <parameter>initial-%-of-infected</parameter>: Initial percentage of infected agents (in both groups, and in total).</li>
                   <li>
-                     <parameter>mixing</parameter>: </li>
+                     <parameter>mixing</parameter>: Percentage of intergroup matches (i.e. couples with partners belonging to different groups)</li>
                   <li>
                      <parameter>expected-lambda-group-1</parameter>,
                      <parameter>expected-lambda-group-2</parameter>, and
-                     <parameter>%-variability</parameter>: </li>
+                     <parameter>%-variability</parameter>: Parameters that specify the distribution of
+                     <parameter>&lambda;<sub>agent,i</sub></parameter> within each group. See section <a href="#heterogeneity">Heterogeneity within each group</a>.</li>
                   <li>
-                     <parameter>agent-based-model?</parameter>: </li>
+                     <parameter>agent-based-model?</parameter>: Turn this switch on if you want to run the agent-based model, or turn it off if you just want to run the mean dynamics. In this latter case the simulation runs significantly faster.</li>
                   <li>
-                     <parameter>time-resolution</parameter>: </li>
+                     <parameter>time-resolution</parameter>: The mean dynamics is an ordinary differential equation (ODE). This ODE is solved numerically using the <a href="https://en.wikipedia.org/wiki/Euler_method">Euler method</a>. Parameter
+                     <parameter>time-resolution</parameter> is the inverse of the step size, i.e. the number of segments (of equal length) in which one time unit is divided. </li>
                </ul>
 
                <h2>Buttons</h2>
