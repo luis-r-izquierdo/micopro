@@ -1150,48 +1150,6 @@ NetLogo 6.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
-<experiments>
-  <experiment name="experiment" repetitions="10" runMetricsEveryStep="false">
-    <setup>startup</setup>
-    <go>go</go>
-    <timeLimit steps="2001"/>
-    <metric>(length list-of-latest-%-infected-agents-ab)</metric>
-    <metric>(mean list-of-latest-%-infected-agents-t1-ab)</metric>
-    <metric>%-infected-agents-t1-md</metric>
-    <metric>(mean list-of-latest-%-infected-agents-t2-ab)</metric>
-    <metric>%-infected-agents-t2-md</metric>
-    <metric>(mean list-of-latest-%-infected-agents-ab)</metric>
-    <metric>%-infected-agents-md</metric>
-    <metric>steady-state?</metric>
-    <enumeratedValueSet variable="n-of-agents-in-total">
-      <value value="1000"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="lambda-t1">
-      <value value="0.5"/>
-      <value value="2"/>
-      <value value="2.5"/>
-      <value value="4"/>
-      <value value="5"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="lambda-t2">
-      <value value="0.25"/>
-      <value value="0.5"/>
-      <value value="1"/>
-      <value value="2"/>
-      <value value="2.5"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="time-resolution">
-      <value value="128"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="agent-based-model?">
-      <value value="true"/>
-    </enumeratedValueSet>
-    <steppedValueSet variable="π" first="0" step="0.05" last="1"/>
-    <enumeratedValueSet variable="initial-%-of-infected">
-      <value value="50"/>
-    </enumeratedValueSet>
-  </experiment>
-</experiments>
 @#$#@#$#@
 @#$#@#$#@
 default
