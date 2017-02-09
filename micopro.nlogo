@@ -127,24 +127,22 @@ to setup-agents
     ;; done to avoid division by zero when pi11 = pi22 = 1
 
   ;; group 1 agents
-  create-individuals round (n-of-g1 / 2) [
+  create-individuals n-of-g1 [
     set my-group 1
     set mate nobody
     let random-% (-1 + random-float 2) * %-variability
     set probability-of-infection (exp-probability-of-infection-g1 * (1 + random-% / 100))
     set hidden? true
-    hatch-individuals 1 [set probability-of-infection (exp-probability-of-infection-g1 * (1 - random-% / 100))]
   ]
 
   ;; group 2 agents
   set n-of-g2 (n-of-agents-in-total - n-of-g1)
-  create-individuals round (n-of-g2 / 2) [
+  create-individuals n-of-g2 [
     set my-group 2
     set mate nobody
     let random-% (-1 + random-float 2) * %-variability
     set probability-of-infection (exp-probability-of-infection-g2 * (1 + random-% / 100))
     set hidden? true
-    hatch-individuals 1 [set probability-of-infection (exp-probability-of-infection-g2 * (1 - random-% / 100))]
   ]
 
 end
