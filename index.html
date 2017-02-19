@@ -385,8 +385,10 @@
                      <parameter>&lambda;<sub>agent</sub></parameter> in group 2</li>
                   <li>
                      <my-monitor>critical-mixing</my-monitor>: Minimum value of
-                     <parameter>mixing</parameter> for which the infection will die out out in the long term for situations where the
-                     <parameter>expected-lambda-group-i</parameter> is below 1 for one group and above 1 for the other (i.e. if both groups were isolated, the infection would die out in one group and would persist in the other).</li>
+                     <parameter>mixing</parameter> for which the infection is expected to die out in the long term for situations where
+                     <parameter>expected-lambda-group-1</parameter> *
+                     <parameter>expected-lambda-group-2</parameter> &le; 1 (this condition implies that, if both groups were isolated, the infection would die out in one group and would persist in the other). The value of
+                     <my-monitor>critical-mixing</my-monitor> is computed using the mean dynamics approximation.</li>
                   <li>
                      <my-monitor>%-infected-agents-g1-ab</my-monitor>: Percentage of infected agents in group 1, in the current time-step in the agent-based model.</li>
                   <li>
