@@ -596,12 +596,12 @@ NIL
 HORIZONTAL
 
 MONITOR
-27
+28
 350
-159
+160
 395
 critical mixing (%)
-critical-mixing
+ifelse-value ((expected-lambda-group-1 * expected-lambda-group-2 > 1) or (critical-mixing > 100))\n  [100]\n  [ifelse-value (critical-mixing < 0) [0][critical-mixing]]
 2
 1
 11

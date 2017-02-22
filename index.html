@@ -384,11 +384,12 @@
                      <my-monitor>avg-lambda-g2</my-monitor>: Average value of
                      <parameter>&lambda;<sub>agent</sub></parameter> in group 2</li>
                   <li>
-                     <my-monitor>critical-mixing</my-monitor>: Minimum value of
-                     <parameter>mixing</parameter> for which the infection is expected to die out in the long term for situations where
-                     <parameter>expected-lambda-group-1</parameter> *
-                     <parameter>expected-lambda-group-2</parameter> &le; 1. The value of
-                     <my-monitor>critical-mixing</my-monitor> is computed using the mean dynamics approximation.</li>
+                     <my-monitor>critical-mixing</my-monitor>: Threshold value for parameter
+                     <parameter>mixing</parameter>. Assuming
+                     <my-monitor>critical-mixing</my-monitor> &lt; 100 %, if
+                     <parameter>mixing</parameter> &ge;
+                     <my-monitor>critical-mixing</my-monitor> the infection is expected to die out in the long term. The value of
+                     <my-monitor>critical-mixing</my-monitor> is computed using the mean dynamic approximation.</li>
                   <li>
                      <my-monitor>%-infected-agents-g1-ab</my-monitor>: Percentage of infected agents in group 1, in the current time-step in the agent-based model.</li>
                   <li>
