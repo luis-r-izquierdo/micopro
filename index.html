@@ -387,7 +387,7 @@
                      <my-monitor>critical-mixing</my-monitor>: Minimum value of
                      <parameter>mixing</parameter> for which the infection is expected to die out in the long term for situations where
                      <parameter>expected-lambda-group-1</parameter> *
-                     <parameter>expected-lambda-group-2</parameter> &le; 1 (this condition implies that, if both groups were isolated, the infection would die out in one group and would persist in the other). The value of
+                     <parameter>expected-lambda-group-2</parameter> &le; 1. The value of
                      <my-monitor>critical-mixing</my-monitor> is computed using the mean dynamics approximation.</li>
                   <li>
                      <my-monitor>%-infected-agents-g1-ab</my-monitor>: Percentage of infected agents in group 1, in the current time-step in the agent-based model.</li>
@@ -482,18 +482,20 @@
    <!-- StikyMenu -->
    <script src="js/stickUp.min.js"></script>
    <script type="text/javascript">
-      jQuery(function ($) {
-         $(document).ready(function () {
+      jQuery(function($) {
+         $(document).ready(function() {
             $('.navbar-default').stickUp();
 
          });
       });
+
    </script>
    <!-- Smoothscroll -->
    <script type="text/javascript" src="js/jquery.corner.js"></script>
    <script src="js/wow.min.js"></script>
    <script>
       new WOW().init();
+
    </script>
    <script src="js/classie.js"></script>
    <script src="js/uiMorphingButton_inflow.js"></script>
