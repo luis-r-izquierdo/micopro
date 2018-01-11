@@ -113,7 +113,7 @@ to setup-specific-variables
     ;; imposes an upper limit on the value of lambda: lambda <= 16.
     ;; Since there could be variability, the population expected value of lambda
     ;; (the value that is set in the interface) should be <= 8.
-    ;; I.e. if the user sets lamda = 8, there could an agent with %-variability = 100,
+    ;; I.e. if the user sets lambda = 8, there could an agent with %-variability = 100,
     ;; who would have a value of lambda = 16, and then probability-of-infection = 1.
   set fraction-of-interacting-agents 0.5
   set exp-probability-of-infection-g1 (expected-lambda-group-1 * probability-of-recovery / fraction-of-interacting-agents)
@@ -1144,7 +1144,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.0
+NetLogo 6.0.2
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
